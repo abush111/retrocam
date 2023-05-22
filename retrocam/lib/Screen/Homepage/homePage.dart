@@ -43,12 +43,22 @@ class _homePageState extends State<homePage> {
   List<CameraDescription>? cameras;
   CameraController? controller;
   Future<void> initCamera() async {
-    cameras = await availableCameras();
-    final CameraController controller = CameraController(
-      cameras![0], // Use the first camera in the list
-      ResolutionPreset.high, // Adjust the resolution as needed
+       cameras = await availableCameras();
+  
+  CameraDescription? selectedCamera;
+  
+  if (cameras!.isNotEmpty) {
+    // Select the desired camera (e.g., front or back camera)
+    selectedCamera = cameras!.firstWhere(
+      (camera) => camera.lensDirection == CameraLensDirection.back,
+      orElse: () => cameras![0],
     );
-    await controller.initialize();
+  }
+
+  if (selectedCamera != null) {
+    controller = CameraController(selectedCamera, ResolutionPreset.medium);
+    await controller?.initialize();
+  }
   }
 
   // increase font size

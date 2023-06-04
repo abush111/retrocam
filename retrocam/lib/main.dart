@@ -6,11 +6,15 @@ import 'Screen/Homepage/homePage.dart';
 Future<void> main() async {
   await ScreenUtil.ensureScreenSize();
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final List<String> items = [
+    'Brigthness',
+    'Greyscale',
+  ];
 
   // This widget is the root of your application.
   @override
@@ -19,6 +23,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        home: homePage());
+        home: homePage(
+          items: items,
+        ));
   }
 }
